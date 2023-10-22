@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
-const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
