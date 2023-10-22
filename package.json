@@ -1,0 +1,21 @@
+{
+  "name": "expressjs",
+  "version": "1.0.0",
+  "description": "expressjs web server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "https": "^1.0.0",
+    "nodemon": "^3.0.1",
+    "socket.io": "^4.7.2",
+    "webdav-server": "^2.6.2"
+  }
+}

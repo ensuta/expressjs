@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음악 스트리밍</title>
+    <style>
+        audio {
+            width: 800px;
+        }
+        .playlist-box {
+            width: 1000px;
+            height: 200px;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+    <h1>음악 스트리밍</h1>
+    <div class="playlist-box">
+        <ul id="playlist">
+            <!-- 음악 목록은 여기에 동적으로 추가됩니다. -->
+        </ul>
+    </div>
+    <h3 id="audio-title">
+        <!-- 동적 음악 제목 -->
+    </h3>
+    <audio id="audio" controls>
+        <!-- 음악 스트리밍을 위한 오디오 요소 -->
+    </audio>
+    <script>
+        const playlistElement = document.getElementById('playlist');
+        const audioElement = document.getElementById('audio');
+        const audioTitleElement = document.getElementById('audio-title'); 
+
+        // 현재 재생 중인 음악 파일 이름을 저장하는 변수
+        let currentPlayingFileName = "";
+
+        // 음악 목록을 가져오는 함수
+        async function fetchPlaylist() {
+            try {
+                const response = await fetch('/getPlaylist');
+                const playlist = await response.json();
+
+                for (const filename in playlist) {
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.textContent = filename;
+                    link.href = '#';
+                    link.addEventListener('click', () => playMusic(filename));
+                    listItem.appendChild(link);
+                    playlistElement.appendChild(listItem);
+                }
+            } catch (error) {
+                console.error('음악 목록을 가져오는 중 오류가 발생했습니다:', error);
+            }
+        }
+
+        // 음악을 스트리밍하는 함수
+        function playMusic(filename) {
+            audioElement.src = `/playlist/${filename}`;
+            audioElement.play();
+            currentPlayingFileName = filename; // 현재 재생 중인 파일 이름을 업데이트
+            updateAudioTitle(); // 현재 재생 중인 파일 이름을 표시
+        }
+
+        // 현재 재생 중인 파일 이름을 표시하는 함수
+        function updateAudioTitle() {
+            audioTitleElement.textContent = currentPlayingFileName;
+        }
+
+        // 페이지 로드 시 음악 목록을 가져옵니다.
+        fetchPlaylist();
+    </script>
+</body>
+</html>
