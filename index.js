@@ -39,7 +39,7 @@ app.get('/bbs/patch', (req, res) => {
   res.sendFile(path.join(__dirname, 'patchnote.html'));
 });
 
-app.get('/bbs/threads', (req, res) => {
+app.get('/threads', (req, res) => {
   const threadsdb = path.join(__dirname, 'db/threads.json');
 
   // 파일을 읽어 JSON 데이터를 파싱
@@ -89,7 +89,7 @@ app.get('/captcha', (req, res) => {
 app.use(bodyParser.json());
 
 // POST 요청 처리
-app.post('/bbs/submitThread', (req, res) => {
+app.post('/submitThread', (req, res) => {
   const threadData = req.body;
 
   const userInputCaptha = threadData.captcha;

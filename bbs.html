@@ -141,7 +141,7 @@
                     content: content
                 };
 
-                fetch('/bbs/submitThread', {
+                fetch('/submitThread', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -165,7 +165,7 @@
             
             });
 
-            fetch('/bbs/threads')
+            fetch('/threads')
                 .then(response => response.json())
                 .then(jsonData => {
                     const threadListElement = document.getElementById('thread-list');
