@@ -13,7 +13,13 @@
                 margin: 0;
                 text-align: center;
             }
-            
+
+            #captcha-form-div {
+                display: flex; 
+                align-items: center; 
+                justify-content: center;
+            }
+
             #nav-bar {
                 position: fixed;
                 top: 0;
@@ -31,7 +37,7 @@
                 border: 1px solid #ccc;
                 padding: 10px;
                 margin: 10px;
-            }
+            }     
         </style>
     </head>
     <body>
@@ -42,7 +48,14 @@
             <h1> 커뮤니티</h1>
             
             <!-- 글 작성 폼 -->
+            
             <form id="data-form">
+                <div id="captcha-form-div">
+                    <label for="captcha-input">Captcha:</label>
+                    <img src="/captcha" alt="CAPTCHA" style="width: 15vw;">    
+                    <input type="text" id="captcha-input" required style="width: 50px;">
+                </div>
+                <br/>
                 <label for="id-input">ID:</label>
                 <input type="text" id="id-input" required style="width: 50px;">
                 <label for="pwd-input">PWD:</label>
@@ -51,13 +64,13 @@
                 <label for="title-input">Title:</label>
                 <input type="text" id="title-input" required style="width: 300px;">
                 <br/>
-                <button type="button" id="img-input">이미지</button>
+                <!-- <button type="button" id="img-input">이미지</button>
                 <button type="button" id="strong-input">굵게</button>
                 <button type="button" id="em-input">기울기</button>
                 <button type="button" id="u-input">밑줄</button>
                 <button type="button" id="s-input">취소선</button>
                 <button type="button" id="ahref-input">링크</button>
-                <br/>
+                <br/> -->
                 <textarea id="content-input" required style="width: 300px; height: 100px;"></textarea>
                 <br/>
                 <button type="submit">제출</button>
@@ -69,56 +82,59 @@
         </div>
         <script>
             const dataForm = document.getElementById('data-form');
-            const idInput = document.getElementById('id-input');
-            const pwdInput = document.getElementById('pwd-input');
-            const titleInput = document.getElementById('title-input');
-            const contentInput = document.getElementById('content-input');
-            const imgInput = document.getElementById('img-input');
-            const strongInput = document.getElementById('strong-input');
-            const emInput = document.getElementById('em-input');
-            const ugInput = document.getElementById('u-input');
-            const sInput = document.getElementById('s-input');
-            const ahrefInput = document.getElementById('ahref-input');
+            const captchaInput = document.getElementById('captcha-input');
+            // const idInput = document.getElementById('id-input');
+            // const pwdInput = document.getElementById('pwd-input');
+            // const titleInput = document.getElementById('title-input');
+            // const contentInput = document.getElementById('content-input');
+            // const imgInput = document.getElementById('img-input');
+            // const strongInput = document.getElementById('strong-input');
+            // const emInput = document.getElementById('em-input');
+            // const ugInput = document.getElementById('u-input');
+            // const sInput = document.getElementById('s-input');
+            // const ahrefInput = document.getElementById('ahref-input');
             
-            document.getElementById('img-input').addEventListener('click', function() {
-                const contentInput = document.getElementById('content-input');
-                contentInput.value += '<img src=" <!-- 링크 삽입 -->"></img>';
-            });
+            // document.getElementById('img-input').addEventListener('click', function() {
+            //     const contentInput = document.getElementById('content-input');
+            //     contentInput.value += '<img src=" <!-- 링크 삽입 -->"></img>';
+            // });
 
-            document.getElementById('strong-input').addEventListener('click', function() {
-                const contentInput = document.getElementById('content-input');
-                contentInput.value += '<strong>굵은 텍스트</strong>'; 
-            });
+            // document.getElementById('strong-input').addEventListener('click', function() {
+            //     const contentInput = document.getElementById('content-input');
+            //     contentInput.value += '<strong>굵은 텍스트</strong>'; 
+            // });
 
-            document.getElementById('em-input').addEventListener('click', function() {
-                const contentInput = document.getElementById('content-input');
-                contentInput.value += '<em>기울인 텍스트</em>'; 
-            });
+            // document.getElementById('em-input').addEventListener('click', function() {
+            //     const contentInput = document.getElementById('content-input');
+            //     contentInput.value += '<em>기울인 텍스트</em>'; 
+            // });
 
-            document.getElementById('u-input').addEventListener('click', function() {
-                const contentInput = document.getElementById('content-input');
-                contentInput.value += '<u>밑줄 친 텍스트</u>';
-            });
+            // document.getElementById('u-input').addEventListener('click', function() {
+            //     const contentInput = document.getElementById('content-input');
+            //     contentInput.value += '<u>밑줄 친 텍스트</u>';
+            // });
 
-            document.getElementById('s-input').addEventListener('click', function() {
-                const contentInput = document.getElementById('content-input');
-                contentInput.value += '<s>취소선 텍스트</s>';
-            });
+            // document.getElementById('s-input').addEventListener('click', function() {
+            //     const contentInput = document.getElementById('content-input');
+            //     contentInput.value += '<s>취소선 텍스트</s>';
+            // });
 
-            document.getElementById('ahref-input').addEventListener('click', function() {
-                const contentInput = document.getElementById('content-input');
-                contentInput.value += '<a href=" <!-- 링크 주소 --> ">링크 텍스트</a>';
-            });
+            // document.getElementById('ahref-input').addEventListener('click', function() {
+            //     const contentInput = document.getElementById('content-input');
+            //     contentInput.value += '<a href=" <!-- 링크 주소 --> ">링크 텍스트</a>';
+            // });
 
             dataForm.addEventListener('submit', function (e) {
                 e.preventDefault();
 
+                const captcha = captchaInput.value;
                 const id = idInput.value;
                 const pwd = pwdInput.value;
                 const title = titleInput.value;
                 const content = contentInput.value;
 
                 const threadData = {
+                    captcha: captcha,
                     id: id,
                     pwd: pwd,
                     title: title,
@@ -143,6 +159,7 @@
                 })
                 .catch(error => console.error('데이터 전송 중 오류가 발생했습니다:', error));
 
+                captchaInput.value = '';
                 titleInput.value = '';
                 contentInput.value = '';
             

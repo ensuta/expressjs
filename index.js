@@ -1,5 +1,7 @@
 const express = require('express');
+const session = require('express-session');
 const bodyParser = require('body-parser');
+const svgCaptcha = require('svg-captcha');
 const app = express();
 const port = 3000;
 const fs = require('fs');
@@ -42,11 +44,41 @@ app.get('/threads.json', (req, res) => {
     
 });
 
+app.use(session({
+  secret: 'T5afE"KgQ=IVR7N7>QwRONuRH*Ot2', // 세션 암호화에 사용되는 비밀 키
+  resave: false, // 세션의 재저장 여부
+  saveUninitialized: true, // 초기화되지 않은 세션을 저장할지 여부
+  cookie: {
+    maxAge: 60000 // 세션 만료 시간 (밀리초)
+  }
+}));
+
+app.get('/captcha', (req, res) => {
+  const captcha = svgCaptcha.create();
+  req.session.captcha = captcha.text; // 캡챠 문자열을 세션에 저장
+  res.type('svg');
+  res.status(200).send(captcha.data);
+});
+
 app.use(bodyParser.json());
 
 // POST 요청 처리
 app.post('/submitThread', (req, res) => {
   const threadData = req.body;
+
+  const userInputCaptha = threadData.captcha;
+  const actualCaptcha = req.session.captcha;
+
+  if(userInputCaptha !== actualCaptcha){
+    return;
+  }
+
+  console.log(threadData);
+
+  delete threadData.captcha;
+
+  console.log(threadData);
+
 
   threadData.date = new Date().toISOString();
   const idString = threadData.id;
@@ -60,7 +92,7 @@ app.post('/submitThread', (req, res) => {
 
   const newidString = idString.replace(/</g, '&lt;').replace(/>/g, '&gt;')
   const newtitleString = titleString.replace(/</g, '&lt;').replace(/>/g, '&gt;')
-  const newcontentString = contentString.replace(/\n/g, '<br/>');
+  const newcontentString = contentString.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br/>');
 
   threadData.id = newidString;
   threadData.title = newtitleString;
