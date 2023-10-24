@@ -39,10 +39,36 @@ app.get('/bbs/patch', (req, res) => {
   res.sendFile(path.join(__dirname, 'patchnote.html'));
 });
 
-app.get('/threads.json', (req, res) => {
-  res.sendFile(path.join(__dirname, 'db/threads.json'));
-    
+app.get('/bbs/threads', (req, res) => {
+  const threadsdb = path.join(__dirname, 'db/threads.json');
+
+  // 파일을 읽어 JSON 데이터를 파싱
+  fs.readFile(threadsdb, 'utf8', (err, data) => {
+    if (err) {
+      console.error('파일을 읽는 중 오류가 발생했습니다:', err);
+      return res.status(500).json({ error: '서버 오류' });
+    }
+
+    try {
+      // JSON 데이터 파싱
+      const jsonData = JSON.parse(data);
+
+      // 패스워드 필드를 제외한 필드만 남기고 새로운 배열 생성
+      const filteredData = jsonData.map((item) => ({
+        id: item.id,
+        title: item.title,
+        content: item.content,
+        date: item.date,
+      }));
+
+      res.json(filteredData);
+    } catch (parseError) {
+      console.error('JSON 데이터 파싱 중 오류가 발생했습니다:', parseError);
+      res.status(500).json({ error: '데이터 처리 오류' });
+    }
+  });
 });
+
 
 app.use(session({
   secret: 'T5afE"KgQ=IVR7N7>QwRONuRH*Ot2', // 세션 암호화에 사용되는 비밀 키
@@ -63,7 +89,7 @@ app.get('/captcha', (req, res) => {
 app.use(bodyParser.json());
 
 // POST 요청 처리
-app.post('/submitThread', (req, res) => {
+app.post('/bbs/submitThread', (req, res) => {
   const threadData = req.body;
 
   const userInputCaptha = threadData.captcha;
