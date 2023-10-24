@@ -152,16 +152,16 @@
                     if (response.ok) {
                         console.log('데이터가 성공적으로 서버로 전송되었습니다.');
                         
+                        titleInput.value = '';
+                        contentInput.value = '';
                         location.reload();
                     } else {
                         console.error('데이터 전송 중 오류가 발생했습니다.');
                     }
                 })
                 .catch(error => console.error('데이터 전송 중 오류가 발생했습니다:', error));
-
+                
                 captchaInput.value = '';
-                titleInput.value = '';
-                contentInput.value = '';
             
             });
 
