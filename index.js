@@ -95,7 +95,7 @@ app.post('/submitThread', (req, res) => {
   const userInputCaptha = threadData.captcha;
   const actualCaptcha = req.session.captcha;
 
-  if(userInputCaptha !== actualCaptcha){
+  if(userInputCaptha !== actualCaptcha || userInputCaptha === undefined){
     return;
   }
 
