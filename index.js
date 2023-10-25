@@ -92,6 +92,12 @@ app.use(bodyParser.json());
 app.post('/submitThread', (req, res) => {
   const threadData = req.body;
 
+  for (const key in threadData) {
+    if(!['captcha', 'id', 'title', 'pw', 'content'].includes(key)) {
+      delete threadData[key];
+    }
+  }
+
   const userInputCaptha = threadData.captcha;
   const actualCaptcha = req.session.captcha;
 
