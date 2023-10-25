@@ -34,9 +34,11 @@
                 text-align: left;
             }
             .thread {
+                width: 90vw;
                 border: 1px solid #ccc;
                 padding: 10px;
                 margin: 10px;
+                overflow-x: auto;
             }     
         </style>
     </head>
@@ -173,20 +175,46 @@
                     jsonData.forEach(threadData => {
                         const threadElement = document.createElement('li');
                         threadElement.classList.add('thread');
-                        threadElement.innerHTML = `
-                            <style>
-                                img {
-                                    width: 50vw;
-                                    height: auto;
-                                }
-                            </style>
+                        // threadElement.innerHTML = `
+                        //     <style>
+                        //         img {
+                        //             width: 50vw;
+                        //             height: auto;
+                        //         }
+                        //     </style>
 
-                            <p>${threadData.id}</p>
-                            <p>${threadData.date}</p>
-                            <h3>${threadData.title}</h3>
-                            ${threadData.content}
-                        `;
-                        threadListElement.appendChild(threadElement);
+                        //     <p>${threadData.id}</p>
+                        //     <p>${threadData.date}</p>
+                        //     <h3>${threadData.title}</h3>
+                        //     ${threadData.content}
+                        // `;
+// 스타일 설정
+var threadStyle = document.createElement("style");
+threadStyle.textContent = "img { width: 50vw; height: auto;}";
+document.head.appendChild(threadStyle);
+
+// ID, 날짜, 제목, 내용 요소 생성 및 설정
+var idElement = document.createElement("p");
+idElement.textContent = threadData.id;
+
+var dateElement = document.createElement("p");
+dateElement.textContent = threadData.date;
+
+var titleElement = document.createElement("h3");
+titleElement.textContent = threadData.title;
+
+var contentElement = document.createElement("div");
+contentElement.innerHTML = threadData.content;
+
+// 요소들을 threadElement에 추가
+threadElement.appendChild(idElement);
+threadElement.appendChild(dateElement);
+threadElement.appendChild(titleElement);
+threadElement.appendChild(contentElement);
+
+// threadElement를 목록에 추가
+var threadListElement = document.getElementById('thread-list');
+threadListElement.appendChild(threadElement);
                     });
                 })
                 .catch(error => console.error('JSON 파일을 로드하는 중 오류가 발생했습니다:', error));
