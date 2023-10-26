@@ -15,6 +15,7 @@
         }
         #page-align {
             text-align: center;
+            max-height: 90vh;
         }
         #hanja {
             font-size: 100px;
@@ -31,7 +32,7 @@
             width: 100px;
         }
         #control-box {
-         display: fixed;
+            display: fixed;
         }
     </style>
     <body>
@@ -39,11 +40,19 @@
             <div id="control-box">
                 <label for="random">렌덤</label>
                 <input type="checkbox" id="random">
+                <label for="hidehanja">한자숨김</label>
+                <input type="checkbox" id="hidehanja">
+                <label for="hidehangul">한글숨김</label>
+                <input type="checkbox" id="hidehangul">
+                <label for="hideum">음독숨김</label>
+                <input type="checkbox" id="hideum">
+                <label for="hidehun">훈독숨김</label>
+                <input type="checkbox" id="hidehun">
             </div>
         <br/>
             <p id="hanja"><strong></strong></p>
             <p id="hangul" class="sound"></p>
-            <p id="em" class="sound"></p>
+            <p id="um" class="sound"></p>
             <p id="hun" class="sound"></p>
             <button type="button" class="btn" onclick="prev()">이전</button>
             <input type="text" id="index-input" required onkeyup="updateOnEnter(event)">
@@ -51,73 +60,6 @@
             <br/>
             <p id="indexoutput"></p>
         </div>
-        <script>
-            let index = 0;
-            let hanjaData; // 한자 데이터를 저장할 변수
-            const checkbox = document.getElementById('random');
-
-            // JSON 파일 로드
-            fetch('hanjajson')
-                .then(response => response.json())
-                .then(data => {
-                    hanjaData = data;
-                    updateHanjaData(index);
-                });
-
-            function prev() {
-                if (checkbox.checked) {
-                    index = Math.floor(Math.random() * 2136);
-                    updateHanjaData(index);     
-                }
-                else{
-                    if (index > 0) {
-                        index--;
-                        updateHanjaData(index);
-                    }
-                }
-            }
-
-            function next() {
-                if(checkbox.checked) {
-                    index = Math.floor(Math.random() * 2136);
-                    updateHanjaData(index);
-                }
-                else{
-
-                    if (index < hanjaData.length - 1) {
-                        index++;
-                        updateHanjaData(index);
-                    }
-                }
-            }
-
-            function updateHanjaData(index) {
-                const hanjaElement = document.getElementById('hanja');
-                const hangulElement = document.getElementById('hangul');
-                const emElement = document.getElementById('em');
-                const hunElement = document.getElementById('hun');
-                const indexoutputElement = document.getElementById('indexoutput');
-
-                if (hanjaData && index >= 0 && index < hanjaData.length) {
-                    const currentHanja = hanjaData[index];
-                    hanjaElement.innerText = Object.values(currentHanja)[0][0];
-                    hangulElement.innerText = Object.keys(currentHanja);
-                    emElement.innerText ="음독 : " + Object.values(currentHanja)[0][1];
-                    hunElement.innerText ="훈독 : " + Object.values(currentHanja)[0][2];
-                    indexoutputElement.innerText = (index+1) + " / 2136";
-                }
-            }
-
-            function updateOnEnter(event) {
-                if (event.key === 'Enter') {
-                    const newIndex = parseInt(document.getElementById('index-input').value);
-                    if (!isNaN(newIndex) && newIndex >= 0 && newIndex < hanjaData.length) {
-                        index = newIndex;
-                        updateHanjaData(index);
-                    }
-                }
-            }
-
-        </script>
+        <script src="jphanja/jphanja.js"></script>
     </body>
 </html>
