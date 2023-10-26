@@ -30,9 +30,17 @@
             font-size: 30px;
             width: 100px;
         }
+        #control-box {
+         display: fixed;
+        }
     </style>
     <body>
         <div id="page-align">
+            <div id="control-box">
+                <label for="random">렌덤</label>
+                <input type="checkbox" id="random">
+            </div>
+        <br/>
             <p id="hanja"><strong></strong></p>
             <p id="hangul" class="sound"></p>
             <p id="em" class="sound"></p>
@@ -46,6 +54,7 @@
         <script>
             let index = 0;
             let hanjaData; // 한자 데이터를 저장할 변수
+            const checkbox = document.getElementById('random');
 
             // JSON 파일 로드
             fetch('hanjajson')
@@ -56,16 +65,29 @@
                 });
 
             function prev() {
-                if (index > 0) {
-                    index--;
-                    updateHanjaData(index);
+                if (checkbox.checked) {
+                    index = Math.floor(Math.random() * 2136);
+                    updateHanjaData(index);     
+                }
+                else{
+                    if (index > 0) {
+                        index--;
+                        updateHanjaData(index);
+                    }
                 }
             }
 
             function next() {
-                if (index < hanjaData.length - 1) {
-                    index++;
+                if(checkbox.checked) {
+                    index = Math.floor(Math.random() * 2136);
                     updateHanjaData(index);
+                }
+                else{
+
+                    if (index < hanjaData.length - 1) {
+                        index++;
+                        updateHanjaData(index);
+                    }
                 }
             }
 
