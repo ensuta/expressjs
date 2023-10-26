@@ -1,220 +1,83 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>커뮤니티</title>
-        <style>
-            body {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-                text-align: center;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
 
-            #captcha-form-div {
-                display: flex; 
-                align-items: center; 
-                justify-content: center;
-            }
+        #captcha-form-div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-            #nav-bar {
-                position: fixed;
-                top: 0;
-                right: 0;
-                padding: 1vh;
-            }
+        #nav-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 1vh;
+        }
 
-            #thread-list {
-                height: 70vh;
-                list-style: none;
-                padding: 0;
-                text-align: left;
-            }
-            .thread {
-                width: 90vw;
-                max-height: 40vw;
-                border: 1px solid #ccc;
-                padding: 10px;
-                margin: 10px;
-                overflow: auto;
-            }     
-        </style>
-    </head>
-    <body>
-        <div id="nav-bar">
-            <a href="/bbs/patch">패치 내역</a>
-        </div>
-        <div id="page-align">
-            <h1> 커뮤니티</h1>
-            
-            <!-- 글 작성 폼 -->
-            
-            <form id="data-form">
-                <div id="captcha-form-div">
-                    <label for="captcha-input">Captcha:</label>
-                    <img src="/captcha" alt="CAPTCHA" style="width: 15vw;">    
-                    <input type="text" id="captcha-input" required style="width: 50px;">
-                </div>
-                <br/>
-                <label for="id-input">ID:</label>
-                <input type="text" id="id-input" required style="width: 50px;">
-                <label for="pwd-input">PWD:</label>
-                <input type="text" id="pwd-input" required style="width: 50px;">
-                <br/>
-                <label for="title-input">Title:</label>
-                <input type="text" id="title-input" required style="width: 300px;">
-                <br/>
-                <!-- <button type="button" id="img-input">이미지</button>
-                <button type="button" id="strong-input">굵게</button>
-                <button type="button" id="em-input">기울기</button>
-                <button type="button" id="u-input">밑줄</button>
-                <button type="button" id="s-input">취소선</button>
-                <button type="button" id="ahref-input">링크</button>
-                <br/> -->
-                <textarea id="content-input" required style="width: 300px; height: 100px;"></textarea>
-                <br/>
-                <button type="submit">제출</button>
-            </form>
+        #thread-list {
+            height: 70vh;
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
 
-            <ul id="thread-list">
-                <!-- JSON 데이터로 동적으로 생성될 스레드 목록 -->
-            </ul>
-        </div>
-        <script>
-            const dataForm = document.getElementById('data-form');
-            const captchaInput = document.getElementById('captcha-input');
-            const idInput = document.getElementById('id-input');
-            const pwdInput = document.getElementById('pwd-input');
-            const titleInput = document.getElementById('title-input');
-            const contentInput = document.getElementById('content-input');
-            // const imgInput = document.getElementById('img-input');
-            // const strongInput = document.getElementById('strong-input');
-            // const emInput = document.getElementById('em-input');
-            // const ugInput = document.getElementById('u-input');
-            // const sInput = document.getElementById('s-input');
-            // const ahrefInput = document.getElementById('ahref-input');
-            
-            // document.getElementById('img-input').addEventListener('click', function() {
-            //     const contentInput = document.getElementById('content-input');
-            //     contentInput.value += '<img src=" <!-- 링크 삽입 -->"></img>';
-            // });
+        .thread {
+            width: 90vw;
+            max-height: 40vw;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            overflow: auto;
+        }
+    </style>
+</head>
 
-            // document.getElementById('strong-input').addEventListener('click', function() {
-            //     const contentInput = document.getElementById('content-input');
-            //     contentInput.value += '<strong>굵은 텍스트</strong>'; 
-            // });
+<body>
+    <div id="nav-bar">
+        <a href="/bbs/patch">패치 내역</a>
+    </div>
+    <div id="page-align">
+        <h1>커뮤니티</h1>
 
-            // document.getElementById('em-input').addEventListener('click', function() {
-            //     const contentInput = document.getElementById('content-input');
-            //     contentInput.value += '<em>기울인 텍스트</em>'; 
-            // });
+        <!-- 글 작성 폼 -->
+        <form id="data-form">
+            <div id="captcha-form-div">
+                <label for="captcha-input">Captcha:</label>
+                <img src="/captcha" alt="CAPTCHA" style="width: 15vw;">
+                <input type="text" id="captcha-input" required style="width: 50px;">
+            </div>
+            <br />
+            <label for="id-input">ID:</label>
+            <input type="text" id="id-input" required style="width: 50px;">
+            <label for="pwd-input">PWD:</label>
+            <input type="text" id="pwd-input" required style="width: 50px;">
+            <br />
+            <label for="title-input">Title:</label>
+            <input type="text" id="title-input" required style="width: 300px;">
+            <br />
+            <!-- Add buttons and input fields as needed -->
+            <textarea id="content-input" required style="width: 300px; height: 100px;"></textarea>
+            <br />
+            <button type="submit">제출</button>
+        </form>
 
-            // document.getElementById('u-input').addEventListener('click', function() {
-            //     const contentInput = document.getElementById('content-input');
-            //     contentInput.value += '<u>밑줄 친 텍스트</u>';
-            // });
-
-            // document.getElementById('s-input').addEventListener('click', function() {
-            //     const contentInput = document.getElementById('content-input');
-            //     contentInput.value += '<s>취소선 텍스트</s>';
-            // });
-
-            // document.getElementById('ahref-input').addEventListener('click', function() {
-            //     const contentInput = document.getElementById('content-input');
-            //     contentInput.value += '<a href=" <!-- 링크 주소 --> ">링크 텍스트</a>';
-            // });
-
-            dataForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                const captcha = captchaInput.value;
-                const id = idInput.value;
-                const pwd = pwdInput.value;
-                const title = titleInput.value;
-                const content = contentInput.value;
-
-                const threadData = {
-                    captcha: captcha,
-                    id: id,
-                    pwd: pwd,
-                    title: title,
-                    content: content
-                };
-
-                fetch('/submitThread', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(threadData)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('데이터가 성공적으로 서버로 전송되었습니다.');
-                        
-                        titleInput.value = '';
-                        contentInput.value = '';
-                        location.reload();
-                    } else {
-                        console.error('데이터 전송 중 오류가 발생했습니다.');
-                    }
-                })
-                .catch(error => console.error('데이터 전송 중 오류가 발생했습니다:', error));
-                
-                captchaInput.value = '';
-            
-            });
-
-            fetch('/threads')
-                .then(response => response.json())
-                .then(jsonData => {
-                    const threadListElement = document.getElementById('thread-list');
-
-                    jsonData.forEach(threadData => {
-                        const threadElement = document.createElement('li');
-                        threadElement.classList.add('thread');
-                        // threadElement.innerHTML = `
-                        //     <style>
-                        //         img {
-                        //             width: 50vw;
-                        //             height: auto;
-                        //         }
-                        //     </style>
-
-                        //     <p>${threadData.id}</p>
-                        //     <p>${threadData.date}</p>
-                        //     <h3>${threadData.title}</h3>
-                        //     ${threadData.content}
-                        // `;
-                    var threadStyle = document.createElement("style");
-                    threadStyle.textContent = "img { width: 50vw; height: auto;}";
-                    document.head.appendChild(threadStyle);
-
-                    var idElement = document.createElement("p");
-                    idElement.textContent = threadData.id;
-
-                    var dateElement = document.createElement("p");
-                    dateElement.textContent = threadData.date;
-
-                    var titleElement = document.createElement("h3");
-                    titleElement.textContent = threadData.title;
-
-                    var contentElement = document.createElement("div");
-                    contentElement.innerHTML = threadData.content;
-
-                    threadElement.appendChild(idElement);
-                    threadElement.appendChild(dateElement);
-                    threadElement.appendChild(titleElement);
-                    threadElement.appendChild(contentElement);
-
-                    var threadListElement = document.getElementById('thread-list');
-                    threadListElement.appendChild(threadElement);
-                    });
-                })
-                .catch(error => console.error('JSON 파일을 로드하는 중 오류가 발생했습니다:', error));
-        </script>
-    </body>
+        <ul id="thread-list">
+            <!-- JSON 데이터로 동적으로 생성될 스레드 목록 -->
+        </ul>
+    </div>
+    <script src="bbs/bbs.js"></script>
+</body>
 </html>

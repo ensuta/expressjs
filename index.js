@@ -35,8 +35,20 @@ app.get('/bbs', (req, res) => {
     res.sendFile(path.join(__dirname, 'bbs.html'));
 });
 
+app.get('/bbs/bbs.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'bbs.js'));
+});
+
 app.get('/bbs/patch', (req, res) => {
   res.sendFile(path.join(__dirname, 'patchnote.html'));
+});
+
+app.get('/jphanja', (req, res) => {
+  res.sendFile(path.join(__dirname, 'jphanja.html'));
+});
+
+app.get('/hanjajson', (req, res) => {
+  res.sendFile(path.join(__dirname, 'japanese_hanja.json'));
 });
 
 app.get('/threads', (req, res) => {

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>일본어 상용한자</title>
+    </head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            margin: 0;
+        }
+        #page-align {
+            text-align: center;
+        }
+        #hanja {
+            font-size: 100px;
+        }
+        .sound {
+            font-size: 30px;
+        }
+        .btn {
+            font-size: 30px;
+            padding: 10px 20px;
+        }
+        #index-input {
+            font-size: 30px;
+            width: 100px;
+        }
+    </style>
+    <body>
+        <div id="page-align">
+            <p id="hanja"><strong></strong></p>
+            <p id="hangul" class="sound"></p>
+            <p id="em" class="sound"></p>
+            <p id="hun" class="sound"></p>
+            <button type="button" class="btn" onclick="prev()">이전</button>
+            <input type="text" id="index-input" required onkeyup="updateOnEnter(event)">
+            <button type="button" class="btn" onclick="next()">다음</button>
+            <br/>
+            <p id="indexoutput"></p>
+        </div>
+        <script>
+            let index = 0;
+            let hanjaData; // 한자 데이터를 저장할 변수
+
+            // JSON 파일 로드
+            fetch('hanjajson')
+                .then(response => response.json())
+                .then(data => {
+                    hanjaData = data;
+                    updateHanjaData(index);
+                });
+
+            function prev() {
+                if (index > 0) {
+                    index--;
+                    updateHanjaData(index);
+                }
+            }
+
+            function next() {
+                if (index < hanjaData.length - 1) {
+                    index++;
+                    updateHanjaData(index);
+                }
+            }
+
+            function updateHanjaData(index) {
+                const hanjaElement = document.getElementById('hanja');
+                const hangulElement = document.getElementById('hangul');
+                const emElement = document.getElementById('em');
+                const hunElement = document.getElementById('hun');
+                const indexoutputElement = document.getElementById('indexoutput');
+
+                if (hanjaData && index >= 0 && index < hanjaData.length) {
+                    const currentHanja = hanjaData[index];
+                    hanjaElement.innerText = Object.values(currentHanja)[0][0];
+                    hangulElement.innerText = Object.keys(currentHanja);
+                    emElement.innerText ="음독 : " + Object.values(currentHanja)[0][1];
+                    hunElement.innerText ="훈독 : " + Object.values(currentHanja)[0][2];
+                    indexoutputElement.innerText = (index+1) + " / 2136";
+                }
+            }
+
+            function updateOnEnter(event) {
+                if (event.key === 'Enter') {
+                    const newIndex = parseInt(document.getElementById('index-input').value);
+                    if (!isNaN(newIndex) && newIndex >= 0 && newIndex < hanjaData.length) {
+                        index = newIndex;
+                        updateHanjaData(index);
+                    }
+                }
+            }
+
+        </script>
+    </body>
+</html>
