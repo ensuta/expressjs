@@ -51,6 +51,10 @@ app.get('/jphanja/jphanja.js', (req, res) => {
   res.sendFile(path.join(__dirname, 'jphanja.js'));
 });
 
+app.get('/jphanja/gana', (req, res) => {
+  res.sendFile(path.join(__dirname, 'gana.html'));
+});
+
 app.get('/hanjajson', (req, res) => {
   res.sendFile(path.join(__dirname, 'japanese_hanja.json'));
 });

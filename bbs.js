@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 const dataForm = document.getElementById('data-form');
 const captchaInput = document.getElementById('captcha-input');
 const idInput = document.getElementById('id-input');
