@@ -7,29 +7,29 @@ const port = 3000;
 const fs = require('fs');
 const path = require('path');
 
-const playlistDirectory = path.join(__dirname, 'playlist'); // MP3 파일이 있는 폴더 경로
-let playlist = {}; // 파일 정보를 저장할 객체
+// const playlistDirectory = path.join(__dirname, 'playlist'); // MP3 파일이 있는 폴더 경로
+// let playlist = {}; // 파일 정보를 저장할 객체
 
-// 서버 시작 시 폴더 스캔 및 파일 정보 수집
-fs.readdirSync(playlistDirectory).forEach((file) => {
-  if (file.endsWith('.mp3')) {
-    const filePath = path.join(playlistDirectory, file);
-    const stat = fs.statSync(filePath);
-    const fileSize = stat.size;
-    playlist[file] = {
-      fileSize: fileSize,
-      contentType: 'audio/mp3', // 파일 형식에 따라 변경
-    };
-  }
-});
+// // 서버 시작 시 폴더 스캔 및 파일 정보 수집
+// fs.readdirSync(playlistDirectory).forEach((file) => {
+//   if (file.endsWith('.mp3')) {
+//     const filePath = path.join(playlistDirectory, file);
+//     const stat = fs.statSync(filePath);
+//     const fileSize = stat.size;
+//     playlist[file] = {
+//       fileSize: fileSize,
+//       contentType: 'audio/mp3', // 파일 형식에 따라 변경
+//     };
+//   }
+// });
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/audio', (req, res) => {
-    res.sendFile(path.join(__dirname, 'audioStream.html'));
-});
+// app.get('/audio', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'audioStream.html'));
+// });
 
 app.get('/bbs', (req, res) => {
     res.sendFile(path.join(__dirname, 'bbs.html'));
@@ -190,43 +190,43 @@ app.post('/submitThread', (req, res) => {
 
 
 
-app.get('/getPlaylist', (req, res) => {
-    res.json(playlist);
-  });
+// app.get('/getPlaylist', (req, res) => {
+//     res.json(playlist);
+//   });
 
-app.get('/playlist/:filename', (req, res) => {
-  const filename = req.params.filename;
-  const filePath = path.join(__dirname, 'playlist', filename);
+// app.get('/playlist/:filename', (req, res) => {
+//   const filename = req.params.filename;
+//   const filePath = path.join(__dirname, 'playlist', filename);
 
-  const stat = fs.statSync(filePath);
-  const fileSize = stat.size;
-  const range = req.headers.range;
+//   const stat = fs.statSync(filePath);
+//   const fileSize = stat.size;
+//   const range = req.headers.range;
 
-  if (range) {
-    const parts = range.replace(/bytes=/, '').split('-');
-    const start = parseInt(parts[0], 10);
-    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-    const chunkSize = end - start + 1;
+//   if (range) {
+//     const parts = range.replace(/bytes=/, '').split('-');
+//     const start = parseInt(parts[0], 10);
+//     const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+//     const chunkSize = end - start + 1;
 
-    const file = fs.createReadStream(filePath, { start, end });
-    const head = {
-      'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-      'Accept-Ranges': 'bytes',
-      'Content-Length': chunkSize,
-      'Content-Type': 'audio/mp3',
-    };
+//     const file = fs.createReadStream(filePath, { start, end });
+//     const head = {
+//       'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+//       'Accept-Ranges': 'bytes',
+//       'Content-Length': chunkSize,
+//       'Content-Type': 'audio/mp3',
+//     };
 
-    res.writeHead(206, head);
-    file.pipe(res);
-  } else {
-    const head = {
-      'Content-Length': fileSize,
-      'Content-Type': 'audio/mp3',
-    };
-    res.writeHead(200, head);
-    fs.createReadStream(filePath).pipe(res);
-  }
-});
+//     res.writeHead(206, head);
+//     file.pipe(res);
+//   } else {
+//     const head = {
+//       'Content-Length': fileSize,
+//       'Content-Type': 'audio/mp3',
+//     };
+//     res.writeHead(200, head);
+//     fs.createReadStream(filePath).pipe(res);
+//   }
+// });
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

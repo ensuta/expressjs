@@ -16,27 +16,243 @@
                 text-align: center;
             }
 
-            .kana-table {
-                width: 100%;
-                border-collapse: collapse;
+            table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 5vw;
             }
 
-            .kana-table th, .kana-table td {
-                border: 1px solid #000;
-                padding: 5px;
+            table, th, td {
+                border: 1px solid black;
             }
 
-            .kana-table th {
-                background-color: #f0f0f0;
+            th, td {
+                padding: 8px;
+                text-align: center;
+            }
+
+            th {
+                background-color: #f2f2f2;
             }
         </style>
     </head>
     <body>
         <div id="body-align">
-            <h1>히라가나</h1>
-            
-            <h1>가타가나</h1>
-            
+            <h1>히라가나 / 가타가나 전환</h1>
+            <label for="kana-switch">히라가나 / 가타가나 전환
+                <input type="checkbox" id="kana-switch">
+            </label>
+            <table id="hiragana-table">
+                <tr>
+                    <th></th>
+                    <th>あ단</th>
+                    <th>い단</th>
+                    <th>う단</th>
+                    <th>え단</th>
+                    <th>お단</th>
+                </tr>
+                <tr>
+                    <td>あ행</td>
+                    <td>あ</td>
+                    <td>い</td>
+                    <td>う</td>
+                    <td>え</td>
+                    <td>お</td>
+                </tr>
+                <tr>
+                    <td>か행</td>
+                    <td>か</td>
+                    <td>き</td>
+                    <td>く</td>
+                    <td>け</td>
+                    <td>こ</td>
+                </tr>
+                <tr>
+                    <td>さ행</td>
+                    <td>さ</td>
+                    <td>し</td>
+                    <td>す</td>
+                    <td>せ</td>
+                    <td>そ</td>
+                </tr>
+                <tr>
+                    <td>た행</td>
+                    <td>た</td>
+                    <td>ち</td>
+                    <td>つ</td>
+                    <td>て</td>
+                    <td>と</td>
+                </tr>
+                <tr>
+                    <td>な행</td>
+                    <td>な</td>
+                    <td>に</td>
+                    <td>ぬ</td>
+                    <td>ね</td>
+                    <td>の</td>
+                </tr>
+                <tr>
+                    <td>は행</td>
+                    <td>は</td>
+                    <td>ひ</td>
+                    <td>ふ</td>
+                    <td>へ</td>
+                    <td>ほ</td>
+                </tr>
+                <tr>
+                    <td>ま행</td>
+                    <td>ま</td>
+                    <td>み</td>
+                    <td>む</td>
+                    <td>め</td>
+                    <td>も</td>
+                </tr>
+                <tr>
+                    <td>や행</td>
+                    <td>や</td>
+                    <td></td>
+                    <td>ゆ</td>
+                    <td></td>
+                    <td>よ</td>
+                </tr>
+                <tr>
+                    <td>ら행</td>
+                    <td>ら</td>
+                    <td>り</td>
+                    <td>る</td>
+                    <td>れ</td>
+                    <td>ろ</td>
+                </tr>
+                <tr>
+                    <td>わ행</td>
+                    <td>わ</td>
+                    <td>ゐ</td>
+                    <td></td>
+                    <td>ゑ</td>
+                    <td>を</td>
+                </tr>
+                <tr>
+                    <td>ん</td>
+                    <td>ん</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <table id="katakana-table" style="display: none;">
+                <tr>
+                    <th></th>
+                    <th>ア단</th>
+                    <th>イ단</th>
+                    <th>ウ단</th>
+                    <th>エ단</th>
+                    <th>オ단</th>
+                </tr>
+                <tr>
+                    <td>ア행</td>
+                    <td>ア</td>
+                    <td>イ</td>
+                    <td>ウ</td>
+                    <td>エ</td>
+                    <td>オ</td>
+                </tr>
+                <tr>
+                    <td>カ행</td>
+                    <td>カ</td>
+                    <td>キ</td>
+                    <td>ク</td>
+                    <td>ケ</td>
+                    <td>コ</td>
+                </tr>
+                <tr>
+                    <td>サ행</td>
+                    <td>サ</td>
+                    <td>シ</td>
+                    <td>ス</td>
+                    <td>セ</td>
+                    <td>ソ</td>
+                </tr>
+                <tr>
+                    <td>タ행</td>
+                    <td>タ</td>
+                    <td>チ</td>
+                    <td>ツ</td>
+                    <td>テ</td>
+                    <td>ト</td>
+                </tr>
+                <tr>
+                    <td>ナ행</td>
+                    <td>ナ</td>
+                    <td>ニ</td>
+                    <td>ヌ</td>
+                    <td>ネ</td>
+                    <td>ノ</td>
+                </tr>
+                <tr>
+                    <td>ハ행</td>
+                    <td>ハ</td>
+                    <td>ヒ</td>
+                    <td>フ</td>
+                    <td>ヘ</td>
+                    <td>ホ</td>
+                </tr>
+                <tr>
+                    <td>マ행</td>
+                    <td>マ</td>
+                    <td>ミ</td>
+                    <td>ム</td>
+                    <td>メ</td>
+                    <td>モ</td>
+                </tr>
+                <tr>
+                    <td>ヤ행</td>
+                    <td>ヤ</td>
+                    <td></td>
+                    <td>ユ</td>
+                    <td></td>
+                    <td>ヨ</td>
+                </tr>
+                <tr>
+                    <td>ラ행</td>
+                    <td>ラ</td>
+                    <td>リ</td>
+                    <td>ル</td>
+                    <td>レ</td>
+                    <td>ロ</td>
+                </tr>
+                <tr>
+                    <td>ワ행</td>
+                    <td>ワ</td>
+                    <td>ヰ</td>
+                    <td></td>
+                    <td>ヱ</td>
+                    <td>ヲ</td>
+                </tr>
+                <tr>
+                    <td>ン</td>
+                    <td>ン</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
         </div>
+        <script>
+            const kanaSwitch = document.getElementById("kana-switch");
+            const hiraganaTable = document.getElementById("hiragana-table");
+            const katakanaTable = document.getElementById("katakana-table");
+    
+            kanaSwitch.addEventListener("change", function() {
+                if (kanaSwitch.checked) {
+                    hiraganaTable.style.display = "none";
+                    katakanaTable.style.display = "table";
+                } else {
+                    hiraganaTable.style.display = "table";
+                    katakanaTable.style.display = "none";
+                }
+            });
+        </script>
     </body>
 </html>
