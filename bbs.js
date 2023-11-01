@@ -4,6 +4,12 @@ const idInput = document.getElementById('id-input');
 const pwdInput = document.getElementById('pwd-input');
 const titleInput = document.getElementById('title-input');
 const contentInput = document.getElementById('content-input');
+const imgInput = document.getElementById('img-input');
+
+document.getElementById('img-input').addEventListener('click', function() {
+    const contentInput = document.getElementById('content-input');
+    contentInput.value += '!(" 링크삽입 ")';
+});
 
 dataForm.addEventListener('submit', function (e) {
     e.preventDefault();
