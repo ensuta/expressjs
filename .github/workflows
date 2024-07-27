@@ -19,7 +19,7 @@ jobs:
     - run: npm run build --if-present
     - name: Deploy to Heroku
       env:
-        HEROKU_API_KEY: ${{ secrets.HRKU-a36b17c9-2ada-4fb9-94af-4b6b3a2daffa }}
-        HEROKU_APP_NAME: ${{ secrets.expressjsserver }}
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
       run: |
         git push https://heroku:${{secrets.HEROKU_API_KEY}}@git.heroku.com/${{secrets.HEROKU_APP_NAME}}.git main
