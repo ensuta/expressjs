@@ -2,8 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
 
@@ -13,31 +14,32 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Use Node.js
+    - name: Create /db/threads.json
+      run: |
+        mkdir -p db
+        touch db/threads.json
+        
+    - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '14'
         
     - name: Install dependencies
-      run: |
-        npm ci
-        npm install body-parser
+      run: npm ci
         
-    - name: Update threads.json
-      run: |
-        mkdir -p db
-        echo '[
-          {
-            "id": "테스트",
-            "pwd": "테스트",
-            "date": "2023-10-21T08:14:16.175Z",
-            "title": "테스트",
-            "content": "넘넘어가기 테스트"
-          }
-        ]' > db/threads.json
+    - name: Build the app
+      run: npm run
         
-    - name: Commit changes
-      uses: stefanzweifel/git-auto-commit-action@v4
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Deploy to Heroku
+      uses: akhileshns/heroku-deploy@v3.12.12
       with:
-        commit_message: Update threads.json
-        file_pattern: db/threads.json
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+        branch: "main"
