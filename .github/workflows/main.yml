@@ -40,7 +40,7 @@ jobs:
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}  # Heroku 앱 이름
         run: |
           git remote add heroku https://git:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${HEROKU_APP_NAME}.git
-          git pull heroku main  # Heroku에서 변경 사항 가져오기
+          git pull heroku main --no-rebase  # Heroku에서 변경 사항 가져오기
 
       - name: Deploy to Heroku
         run: |
