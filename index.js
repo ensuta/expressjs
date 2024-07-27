@@ -3,7 +3,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const svgCaptcha = require('svg-captcha');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Heroku에서는 PORT 환경 변수를 사용
 const fs = require('fs');
 const path = require('path');
 
