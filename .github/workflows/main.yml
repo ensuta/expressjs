@@ -28,8 +28,8 @@ jobs:
 
       - name: Deploy to Heroku
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}  # Heroku API 키
-          HEROKU_APP_NAME: your-heroku-app-name  # Heroku 앱 이름
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 
+          HEROKU_APP_NAME: expressjsserver 
         run: |
           git remote add heroku https://git.heroku.com/${HEROKU_APP_NAME}.git
           git add db/threads.json
