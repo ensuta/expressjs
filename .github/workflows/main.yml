@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # 전체 리포지토리를 가져옴
 
       - name: Set up Node.js (또는 필요한 런타임)
         uses: actions/setup-node@v2
@@ -23,8 +25,9 @@ jobs:
 
       - name: Create or update threads.json
         run: |
-          mkdir -p db
-          echo '[]' > db/threads.json
+          mkdir -p db  # db 디렉토리가 없다면 생성
+          echo '[]' > db/threads.json  # 초기화 (빈 배열로 설정)
+          # 여기에 threads.json을 업데이트하는 명령어를 추가하세요.
 
       - name: Set up Git user
         run: |
@@ -39,4 +42,4 @@ jobs:
           git remote add heroku https://git:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${HEROKU_APP_NAME}.git
           git add db/threads.json
           git commit -m "Update threads.json"
-          git push heroku main
+          git push heroku main  # Heroku에 푸시하여 배포
