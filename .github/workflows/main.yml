@@ -23,3 +23,27 @@ jobs:
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
       run: |
         git push https://heroku:${{secrets.HEROKU_API_KEY}}@git.heroku.com/${{secrets.HEROKU_APP_NAME}}.git main
+  update-threads:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Update threads.json
+      run: |
+        mkdir -p db
+        echo '[
+          {
+            "id": "테스트",
+            "pwd": "테스트",
+            "date": "2023-10-21T08:14:16.175Z",
+            "title": "테스트",
+            "content": "넘넘어가기 테스트"
+          }
+        ]' > db/threads.json
+    
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Update threads.json
+        file_pattern: db/threads.json
